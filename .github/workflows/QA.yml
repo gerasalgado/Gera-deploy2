@@ -43,7 +43,7 @@ jobs:
       - name: Run test
         run: npm run test
       - name: set homepage
-        run: npm run setHomePage
+        run: npm run setHomepage
       - name: Build
         run: CI=false npm run build
       - name: deploy
