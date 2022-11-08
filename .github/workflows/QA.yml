@@ -53,8 +53,14 @@ jobs:
       - name: set homepage
         run: npm run setHomepage
 
-      - name: deploy to QA env --> Netlify
-        run: netlify deploy -p --auth ${{ secrets.GERAQATOKEN }} --site ${{ secrets.SITEID }}
+      - name: Deploy Site
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.SITEID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.GERAQATOKEN }}
+        run: npx netlify-cli deploy --dir=dist --prodIfUnlocked
+
+      #- name: deploy to QA env --> Netlify
+      #  run: netlify deploy -p --auth ${{ secrets.GERAQATOKEN }} --site ${{ secrets.SITEID }}
         
   
   PR-automated:
