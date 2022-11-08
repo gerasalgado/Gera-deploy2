@@ -23,6 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --coverage --watchAll=false",
     "lint": "eslint --cache . --ext ts,tsx",
+    "netlify": "netlify",
     "eject": "react-scripts eject",
     "prepare": "husky install"
   },
