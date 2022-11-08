@@ -22,7 +22,7 @@ jobs:
         run:  CI=false npm run build
 
       - name: deploy
-        run: netlify deploy -p --auth {{ secrets.GERAQATOKEN }} --site {{ secrets.SITEID }}
+        run: netlify deploy -p --auth ${{ secrets.GERAQATOKEN }} --site ${{ secrets.SITEID }}
 
       - name: Test Lint
         run: npm run lint
