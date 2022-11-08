@@ -6,8 +6,6 @@ on:
       - develop/*
 jobs:
   test-code:
-    environment:
-    name: GeraQA
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,14 +15,34 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: build
-        run:  CI=false npm run build
-
-      - name: deploy
-        run: netlify deploy -p --auth ${{ secrets.GERAQATOKEN }} --site ${{ secrets.SITEID }}
-
       - name: Test Lint
         run: npm run lint
 
       - name: Test coverage
         run: npm run test
+
+QA-deploy:
+    needs: test-code
+    environment:
+      name: QA
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run test
+        run: npm run test
+
+      - name: Set Homepage
+        run: npm run setHomepage
+
+      - name: Build
+        run: CI=false npm run build
+
+        - name: deploy
+        run: netlify deploy -p --auth ${{ secrets.GERAQATOKEN }} --site ${{ secrets.SITEID }}
