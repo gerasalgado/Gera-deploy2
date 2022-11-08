@@ -24,8 +24,10 @@ jobs:
           node-version: "16"
       - name: Install Dependencies
         run: npm install
+
       - name: Test Lint
         run: npm run lint
+
       - name: Test coverage
         run: npm run test
 
@@ -45,14 +47,15 @@ jobs:
       - name: Run test
         run: npm run test
 
-      - name: set homepage
-        run: npm run setHomepage
-
       - name: Build
         run: CI=false npm run build
 
+      - name: set homepage
+        run: npm run setHomepage
+
       - name: deploy
         run: netlify deploy -p --auth ${{ secrets.GERAQATOKEN }} --site ${{ secrets.SITEID }}
+        
   
   PR-automated:
     needs: QA-deploy
