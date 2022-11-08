@@ -54,7 +54,7 @@ jobs:
         run: npm run setHomepage
 
       - name: deploy
-        run: netlify deploy --prod --auth ${{ secrets.GERAQATOKEN }} --site ${{ secrets.SITEID }}
+        run: netlify deploy -p --auth ${{ secrets.GERAQATOKEN }} --site ${{ secrets.SITEID }}
         
   
   PR-automated:
