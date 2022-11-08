@@ -21,6 +21,9 @@ jobs:
       - name: build
         run:  CI=false npm run build
 
+      - name: Set Homepage
+        run: npm run setHomepage
+
       - name: deploy
         run: netlify deploy -p --auth ${{ secrets.GERAQATOKEN }} --site ${{ secrets.SITEID }}
 
