@@ -14,7 +14,17 @@ jobs:
           node-version: "18"
       - name: Install Dependencies
         run: npm install
+
+      - name: build
+        run:  npm run build
+
+      - name: deploy
+        run: npm deploy -p --auth {{secrets.GERAQATOKEN}} --site {{secrets.SITEID}}
+
       - name: Test Lint
         run: npm run lint
+
       - name: Test coverage
         run: npm run test
+        
+ 
