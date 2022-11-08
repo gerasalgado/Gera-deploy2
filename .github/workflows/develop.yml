@@ -8,7 +8,7 @@ on:
 jobs:
   test-code:
     environment:
-    name: GeraQA
+     name: GeraQA
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
