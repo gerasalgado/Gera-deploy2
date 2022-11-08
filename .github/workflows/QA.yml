@@ -1,0 +1,67 @@
+name: Deploy QA env
+on:
+  pull_request:
+  push:
+    branches-ignore:
+      - main
+  workflow_dispatch:
+env:
+  CI: false
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+jobs:
+  validate-dev-changes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      - name: Install Dependencies
+        run: npm install
+      - name: Test Lint
+        run: npm run lint
+      - name: Test coverage
+        run: npm run test
+  QA-deploy:
+    needs: validate-dev-changes
+    environment:
+      name: QA
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      - name: Install Dependencies
+        run: npm install
+      - name: Run test
+        run: npm run test
+      - name: set homepage
+        run: npm run setHomePage
+      - name: Build
+        run: CI=false npm run build
+      - name: deploy
+        run: netlify deploy -p --auth ${{ secrets.GERAQATOKEN }} --site ${{ secrets.SITEID }}
+  PR-automated:
+    needs: QA-deploy
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      - name: get branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: get-branch
+      - name: pull-request
+        run: gh pr create --base main --head ${{ steps.get-branch.outputs.branch }} --title "Pulling ${{ steps.get-branch.outputs.branch }} into main" --body "Automated PR"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
