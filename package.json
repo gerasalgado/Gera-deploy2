@@ -25,7 +25,8 @@
     "lint": "eslint --cache . --ext ts,tsx",
     "netlify": "netlify",
     "eject": "react-scripts eject",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "setHomepage": "node scripts/update_homepage.js"
   },
   "eslintConfig": {
     "extends": [
