@@ -6,7 +6,7 @@ const pkgJsonPath =
 const json = require(pkgJsonPath);
 
 if (json.hasOwnProperty("homepage")) {
-  json.homepage = "https://ephemeral-pony-ea6d38.netlify.app";
+  json.homepage = "https://subtle-parfait-a497f8.netlify.app/";
 }
 
 saveFile(pkgJsonPath, JSON.stringify(json, null, 2));

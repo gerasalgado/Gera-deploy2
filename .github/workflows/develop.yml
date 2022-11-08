@@ -8,7 +8,7 @@ on:
 jobs:
   test-code:
     environment:
-    name: GeraQA
+     name: GeraQA
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -20,6 +20,9 @@ jobs:
 
       - name: build
         run:  CI=false npm run build
+
+      - name: Set Homepage
+        run: npm run setHomepage
 
       - name: deploy
         run: netlify deploy -p --auth ${{ secrets.GERAQATOKEN }} --site ${{ secrets.SITEID }}
