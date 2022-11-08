@@ -53,8 +53,7 @@ jobs:
       - name: set homepage
         run: npm run setHomepage
 
-      - name: deploy to QA env --> Netlify
-        run: netlify deploy -p --auth ${{ secrets.GERAQATOKEN }} --site ${{ secrets.SITEID }}
+    
         
   
   PR-automated:
